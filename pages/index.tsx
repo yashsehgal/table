@@ -2,7 +2,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHeader, TableHeading, T
 import { Progress } from "@/components/ui/Progress";
 import { ArrowDownRight } from "lucide-react";
 import Link from "next/link";
-import React, { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 
 const AppView: React.FunctionComponent = () => {
   const { TableHeadingData, TableCellsData } = getTransactionData();
@@ -37,11 +37,6 @@ const AppView: React.FunctionComponent = () => {
                           paddingRight: '32px'
                         }}>
                           {slot?.content?.map((token: { tokenName: string; tokenPercentage: number }, tokenIndex: number) => {
-                            const [tokenCompositionProgress, setTokenCompositionProgress] = useState(0);
-                            React.useEffect(() => {
-                              const timer = setTimeout(() => setTokenCompositionProgress(token?.tokenPercentage), 100);
-                              return () => clearTimeout(timer);
-                            }, []);
                             return (
                               <div className="token-composition-stats-wrapper flex flex-row items-center justify-start gap-2"
                                 key={tokenIndex}
@@ -49,7 +44,7 @@ const AppView: React.FunctionComponent = () => {
                                 <span className="token-name font-medium">
                                   {token?.tokenName}
                                 </span>
-                                <Progress value={tokenCompositionProgress} />
+                                <Progress value={token?.tokenPercentage} />
                                 <span className="token-composition-percentage font-medium">
                                   {token?.tokenPercentage + "%"}
                                 </span>
