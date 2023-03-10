@@ -1,25 +1,25 @@
 import { createContext } from "react";
-import { 
-    TableBodyPropsType, 
-    TableCaptionPropsType, 
-    TableCellPropsType, 
-    TableHeaderPropsType, 
-    TableHeadingPropsType, 
-    TablePropsType, 
-    TableRowPropsType 
+import {
+    TableBodyPropsType,
+    TableCaptionPropsType,
+    TableCellPropsType,
+    TableHeaderPropsType,
+    TableHeadingPropsType,
+    TablePropsType,
+    TableRowPropsType
 } from "./types/TableType";
 import { InfoIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/Tooltip";
 
 const Table: React.FunctionComponent<TablePropsType> = ({
     children,
-    hasPagination=false,
+    hasPagination = false,
     style,
 }, props: any | HTMLAllCollection) => {
     const TableContext = createContext({});
     TableContext.displayName = "TableContext";
     return (
-        <table 
+        <table
             style={style}
             className={` ${props?.className}`}
             {...props}
@@ -30,13 +30,14 @@ const Table: React.FunctionComponent<TablePropsType> = ({
         </table>
     )
 };
+Table.displayName = "Table";
 
 const TableHeader: React.FunctionComponent<TableHeaderPropsType> = ({
     children,
     style
 }, props: any | HTMLAllCollection) => {
     return (
-        <thead 
+        <thead
             style={style}
             className={`border border-gray-300 ${props?.className}`}
             {...props}
@@ -47,11 +48,12 @@ const TableHeader: React.FunctionComponent<TableHeaderPropsType> = ({
         </thead>
     )
 };
+TableHeader.displayName = "TableHeader";
 
 const TableHeading: React.FunctionComponent<TableHeadingPropsType> = ({
     children,
     info,
-    isSortable=false,
+    isSortable = false,
     style
 }, props: any | HTMLAllCollection) => {
     return (
@@ -59,11 +61,11 @@ const TableHeading: React.FunctionComponent<TableHeadingPropsType> = ({
             scope="col"
             style={style}
             className={`text-left text-sm py-2 px-4 bg-gray-100 text-gray-500 
-                        min-w-[180px] w-fit max-w-[240px] font-medium cursor-default
+                        min-w-[220px] w-fit max-w-[240px] font-medium cursor-default
                         ${props?.className}`}
             {...props}
         >
-            {info && <span className="flex flex-row items-center justify-start gap-1 w-fit">
+            {info ? <span className="flex flex-row items-center justify-start gap-1 w-fit">
                 {children}
                 <TooltipProvider>
                     <Tooltip>
@@ -75,17 +77,17 @@ const TableHeading: React.FunctionComponent<TableHeadingPropsType> = ({
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
-            </span>}
-            {!info && children}
+            </span> : children}
         </th>
     )
 };
+TableHeading.displayName = "TableHeading";
 
 const TableBody: React.FunctionComponent<TableBodyPropsType> = ({
     children,
     style
 }, props: any | HTMLAllCollection) => {
-    return  (
+    return (
         <tbody
             style={style}
             className={` ${props?.className}`}
@@ -95,6 +97,7 @@ const TableBody: React.FunctionComponent<TableBodyPropsType> = ({
         </tbody>
     )
 };
+TableBody.displayName = "TableBody";
 
 const TableRow: React.FunctionComponent<TableRowPropsType> = ({
     children,
@@ -110,15 +113,18 @@ const TableRow: React.FunctionComponent<TableRowPropsType> = ({
         </tr>
     )
 };
+TableRow.displayName = "TableRow";
 
 const TableCell: React.FunctionComponent<TableCellPropsType> = ({
     children,
     style,
-    disabled=false
+    disabled = false
 }, props: any | HTMLAllCollection) => {
     return (
         <td
-            className={(disabled && "cursor-not-allowed bg-gray-200") + `text-left text-sm py-2 px-4 ${props?.className || ""}`}
+            className={(disabled && "cursor-not-allowed bg-gray-200") + `text-left text-sm py-2 px-4 
+                        min-w-[200px] w-fit max-w-[320px]
+                        ${props?.className || ""}`}
             style={style}
             {...props}
         >
@@ -126,6 +132,7 @@ const TableCell: React.FunctionComponent<TableCellPropsType> = ({
         </td>
     )
 };
+TableCell.displayName = "TableCell";
 
 const TableCaption: React.FunctionComponent<TableCaptionPropsType> = ({
     children,
@@ -142,6 +149,7 @@ const TableCaption: React.FunctionComponent<TableCaptionPropsType> = ({
         </caption>
     )
 };
+TableCaption.displayName = "TableCaption";
 
 export {
     Table,

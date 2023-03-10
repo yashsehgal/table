@@ -12,7 +12,7 @@ type TableHeaderPropsType = {
 };
 
 type TableHeadingPropsType = {
-    children?: ReactNode | string;
+    children?: ReactNode;
     info?: string;
     style?: CSSProperties;
     isSortable?: boolean;
