@@ -3,6 +3,8 @@ import { ReactNode, CSSProperties } from "react";
 type TablePropsType = {
     children?: ReactNode;
     hasPagination?: boolean;
+    rowsPerPage: number;
+    rows?: any;
     style?: CSSProperties;
 };
 
@@ -13,7 +15,6 @@ type TableHeaderPropsType = {
 
 type TableHeadingPropsType = {
     children?: ReactNode;
-    info?: string;
     style?: CSSProperties;
     isSortable?: boolean;
 };

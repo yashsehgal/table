@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import React, { createContext } from "react";
 import {
     TableBodyPropsType,
     TableCaptionPropsType,
@@ -8,26 +8,57 @@ import {
     TablePropsType,
     TableRowPropsType
 } from "./types/TableType";
-import { InfoIcon } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/Tooltip";
+// import { InfoIcon } from "lucide-react";
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/Tooltip";
+
+const TableContext = createContext({
+    rowsPerPage: 10,
+    hasPagination: false,
+    rows: []
+});
+
+// const TablePagination: React.FunctionComponent = () => {
+//     let PaginationActions: any = [];
+//     return (
+//         <TableContext.Consumer>
+//             {({ rowsPerPage, rows }) => {
+//                 for (let rowCount = 1; rowCount < rows.length / rowsPerPage; rowCount++) {
+//                     PaginationActions.push(
+//                         <button className="px-3 py-1.5 rounded border border-gray-300 text-sm bg-gray-50 hover:bg-gray-100">
+//                             {rowCount}
+//                         </button>
+//                     )
+//                 }
+//                 PaginationActions?.map((action, actionIndex) => (
+//                     <React.Fragment key={actionIndex}>
+//                         {action}
+//                     </React.Fragment>
+//                 ))
+//             }}
+//         </TableContext.Consumer>
+//     )
+// };
 
 const Table: React.FunctionComponent<TablePropsType> = ({
     children,
     hasPagination = false,
+    rowsPerPage,
+    rows,
     style,
 }, props: any | HTMLAllCollection) => {
-    const TableContext = createContext({});
     TableContext.displayName = "TableContext";
     return (
-        <table
-            style={style}
-            className={` ${props?.className}`}
-            {...props}
-        >
-            <TableContext.Provider value={hasPagination}>
-                {children}
-            </TableContext.Provider>
-        </table>
+        <TableContext.Provider value={{ rowsPerPage, hasPagination, rows }}>
+            <div className="table-container w-fit grid grid-cols-1 gap-3">  
+                <table
+                    style={style}
+                    className={` ${props?.className}`}
+                    {...props}
+                >
+                    {children}
+                </table>
+            </div>
+        </TableContext.Provider>
     )
 };
 Table.displayName = "Table";
@@ -52,7 +83,6 @@ TableHeader.displayName = "TableHeader";
 
 const TableHeading: React.FunctionComponent<TableHeadingPropsType> = ({
     children,
-    info,
     isSortable = false,
     style
 }, props: any | HTMLAllCollection) => {
@@ -65,19 +95,7 @@ const TableHeading: React.FunctionComponent<TableHeadingPropsType> = ({
                         ${props?.className}`}
             {...props}
         >
-            {info ? <span className="flex flex-row items-center justify-start gap-1 w-fit">
-                {children}
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <InfoIcon className="w-3 cursor-pointer hover:brightness-50" />
-                        </TooltipTrigger>
-                        <TooltipContent className="w-fit max-w-[320px]">
-                            {info}
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-            </span> : children}
+            {children}
         </th>
     )
 };
